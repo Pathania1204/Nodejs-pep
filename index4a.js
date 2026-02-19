@@ -18,8 +18,6 @@ const app = express()
 // })
 
 app.listen(8080, () => console.log("Server Started"))
-app.get("/add/:a/:b/:c/:d", (req, res) => {
-    console.log(req.url);
-    console.log(req.params);
-    res.send("Hello World")
+app.get("/:a/:b/:c/:d", (req, res) => {
+    res.send("Hello Students")
 })

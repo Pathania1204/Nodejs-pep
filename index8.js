@@ -4,6 +4,12 @@ app.use(express.json())
 app.listen(8080,()=>{
     console.log("Server is running at http://localhost:8080")
 })
+// const greet=(req,res,next)=>{
+//     console.log("Hello World");
+//     next()
+// }
+// app.use(greet);
+
 app.get("/",(req,res)=>{
     res.send(users);
 })

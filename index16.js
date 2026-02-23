@@ -1,21 +1,15 @@
 import express from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import {middleware,authorize} from"./middleware/auth.js"
 const secretKey = "mysecretkey";
+
 
 const app = express();
 app.listen(8080, () => {
   console.log("server is starting");
 });
 
-const authorize = (...roles) => {
-  return (req, res, next) => {
-    if (!roles.includes(req.user.role)) {
-      return res.status(403).json({ message: "Access denied" });
-    }
-    next();
-  };
-};
 
 // const middleware = (req, res, next) => {
 //   const authHeader = req.headers.authorization;
@@ -31,19 +25,7 @@ const authorize = (...roles) => {
 //   }
 // };
 
-const middleware = (req, res, next) => {
-  const authHeader = req.headers.authorization;
-  if (!authHeader)
-    return res.status(401).json({ message: "Authorization header missing" });
-  const token = authHeader.split(" ")[1];
-  try {
-    const decoded = jwt.verify(token, secretKey);
-    req.user = decoded;   //attach user to request
-    next();
-  } catch (err) {
-    res.status(401).json({ message: "Invalid token" });
-  }
-};
+
 
 app.use(express.json());
 const users = [];
